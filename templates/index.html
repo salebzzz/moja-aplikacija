@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="sr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Chat Aplikacija</title>
-        
-        <!-- Učitaj socket.io biblioteku -->
-        <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-        
-        <!-- Učitaj script.js nakon socket.io -->
-        <script src="{{ url_for('static', filename='script.js') }}" defer></script>
-    
-        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    </head>
-      
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Aplikacija</title>
+    <link rel="icon" href="static/favicon.ico">
+
+    <!-- Učitaj socket.io biblioteku -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+    <!-- Učitaj script.js nakon socket.io -->
+    <script src="static/script.js" defer></script>
+
+    <!-- Učitaj styles.css -->
+    <link rel="stylesheet" href="static/styles.css">
+</head>
 
 <body>
     <h1>Dobrodošli u Chat</h1>
@@ -28,10 +29,6 @@
         </div>
     </div>
     <input type="text" id="message-input" placeholder="Unesite poruku...">
-    <button id="send-button">Pošalji</button> <!-- Promenjeno da ima ID -->
-   
-
-    
-
+    <button id="send-button">Pošalji</button>
 </body>
 </html>
