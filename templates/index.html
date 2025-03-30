@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="sr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Chat Aplikacija</title>
+        
+        <!-- Učitaj socket.io biblioteku -->
+        <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+        
+        <!-- Učitaj script.js nakon socket.io -->
+        <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+    
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    </head>
+      
+
+<body>
+    <h1>Dobrodošli u Chat</h1>
+    <div id="chat-box"></div> <!-- Ovde će ići poruke -->
+    <div id="video-container">
+        <h2>Video Chat</h2>
+        <video id="localVideo" autoplay playsinline></video>
+        <video id="remoteVideo" autoplay playsinline></video>
+        <div id="video-buttons">
+            <button id="start-call">Start Call</button>
+            <button id="end-call">End Call</button>
+        </div>
+    </div>
+    <input type="text" id="message-input" placeholder="Unesite poruku...">
+    <button id="send-button">Pošalji</button> <!-- Promenjeno da ima ID -->
+   
+
+    
+
+</body>
+</html>

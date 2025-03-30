@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emoji-picker-element/1.9.1/emoji-picker-element.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/emoji-picker-element/1.9.1/emoji-picker-element.js"></script>
+
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/chat">Chat</a>
+        <a href="/video">Video</a>
+    </nav>
+
+    <div id="chat-container">
+        <h2>Chat</h2>
+
+        <!-- Izbor jezika -->
+        <label for="user-language">Moj jezik:</label>
+        <select id="user-language">
+            <option value="sr">Srpski</option>
+            <option value="en">Engleski</option>
+            <option value="es">Španski</option>
+            <option value="de">Nemački</option>
+            <option value="fr">Francuski</option>
+            <option value="ru">Ruski</option>
+            <option value="zh">Kineski</option>
+            <option value="pt">Portugalski (Brazil)</option>
+            <option value="hi">Hindski</option>
+            <option value="ja">Japanski</option>
+            <option value="it">Italijanski</option>
+            <option value="ar">Arapski</option>
+            <option value="nl">Holandski</option>
+            <option value="tr">Turski</option>
+            <option value="ko">Korejski</option>
+        </select>
+
+        <label for="translate-language">Prevedi na:</label>
+        <select id="translate-language">
+            <option value="en">Engleski</option>
+            <option value="sr">Srpski</option>
+            <option value="es">Španski</option>
+            <option value="de">Nemački</option>
+            <option value="fr">Francuski</option>
+            <option value="ru">Ruski</option>
+            <option value="zh">Kineski</option>
+            <option value="pt">Portugalski (Brazil)</option>
+            <option value="hi">Hindski</option>
+            <option value="ja">Japanski</option>
+            <option value="it">Italijanski</option>
+            <option value="ar">Arapski</option>
+            <option value="nl">Holandski</option>
+            <option value="tr">Turski</option>
+            <option value="ko">Korejski</option>
+        </select>
+
+        <!-- Chat box -->
+        <div id="chat-box"></div>
+
+        <!-- Polje za unos poruka -->
+        <textarea id="message-input" placeholder="Unesite poruku..." rows="3"></textarea>
+
+        <button onclick="sendMessage()">Pošalji</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.0/socket.io.js"></script>
+    <script>
+        var socket = io.connect('http://127.0.0.1:5000');
+
+        socket.on('connect', function() {
+            console.log("Povezan na WebSocket server!");
+        });
+
+        socket.on('message', function(msg) {
+            console.log("Primljena poruka:", msg);
+            let chatBox = document.getElementById("chat-box");
+            let msgDiv = document.createElement("div");
+            msgDiv.classList.add("chat-message", "received");
+            msgDiv.innerText = msg;
+            chatBox.appendChild(msgDiv);
+        });
+
+        async function sendMessage() {
+            let msg = document.getElementById("message-input").value;
+            let userLang = document.getElementById("user-language").value;  // Izabrani ulazni jezik
+            let targetLang = document.getElementById("translate-language").value; // Ciljni jezik
+
+            if (msg.trim() === "") return;
+
+            // Prvo prevodimo poruku pre nego što je pošaljemo
+            let translatedText = await translateMessage(msg, userLang, targetLang);
+
+            socket.send(translatedText); // Šaljemo prevedenu poruku
+
+            let chatBox = document.getElementById("chat-box");
+            let msgDiv = document.createElement("div");
+            msgDiv.classList.add("chat-message", "sent");
+            msgDiv.innerText = translatedText;
+            chatBox.appendChild(msgDiv);
+
+            document.getElementById("message-input").value = "";
+        }
+
+        // Funkcija za prevođenje preko Google Translate API-ja
+        async function translateMessage(text, fromLang, toLang) {
+            let url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${fromLang}&tl=${toLang}&dt=t&q=${encodeURIComponent(text)}`;
+
+            try {
+                let response = await fetch(url);
+                let result = await response.json();
+                return result[0][0][0]; // Vraća prevedeni tekst
+            } catch (error) {
+                console.error("Greška u prevođenju:", error);
+                return text; // Ako API ne radi, vraća originalni tekst
+            }
+        }
+    </script>
+</body>
+</html>

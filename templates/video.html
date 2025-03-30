@@ -1,0 +1,77 @@
+ <!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Chat</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script> <!-- Koristi samo ovu liniju -->
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/chat">Chat</a>
+        <a href="/video">Video</a>
+    </nav>
+    <h1>Live Video Chat</h1>
+    <!-- Video prikaz -->
+    <div class="video-container">
+        <video id="localVideo" autoplay playsinline></video>
+        <video id="remoteVideo" autoplay playsinline></video>
+        <div id="subtitles"></div>
+
+    </div>
+    <div id="video-container">
+        <video id="remoteVideo" autoplay playsinline></video>
+        <div id="video-subtitles">Prevod će se pojaviti ovde...</div>
+    </div>
+    
+    <!-- Kontrole za video poziv -->
+    <button id="start-call">Pokreni poziv</button>
+    <button id="end-call">Prekini poziv</button>
+    <!-- Titlovi -->
+    <button id="start-subtitles">🎬 Pokreni titlove</button>
+    <button id="stop-subtitles">⏹ Zaustavi titlove</button>
+    <label for="source-language">Govorim:</label>
+<select id="source-language">
+    <option value="sr">🇷🇸 Srpski</option>
+    <option value="en">🇬🇧 Engleski</option>
+    <option value="de">🇩🇪 Nemački</option>
+    <option value="es">🇪🇸 Španski</option>
+    <option value="fr">🇫🇷 Francuski</option>
+    <option value="ru">🇷🇺 Ruski</option>
+    <option value="pt">🇧🇷 Portugalski</option>
+    <option value="hi">🇮🇳 Hindi</option>
+    <option value="zh">🇨🇳 Kineski</option>
+    <option value="ja">🇯🇵 Japanski</option>
+    <option value="ar">🇸🇦 Arapski</option>
+    <option value="nl">🇳🇱 Holandski</option>
+    <option value="tr">🇹🇷 Turski</option>
+    <option value="it">🇮🇹 Italijanski</option>
+    <option value="ko">🇰🇷 Korejski</option>
+</select>
+
+<label for="target-language">Želim prevod na:</label>
+<select id="target-language">
+    <option value="en">🇬🇧 Engleski</option>
+    <option value="sr">🇷🇸 Srpski</option>
+    <option value="de">🇩🇪 Nemački</option>
+    <option value="es">🇪🇸 Španski</option>
+    <option value="fr">🇫🇷 Francuski</option>
+    <option value="ru">🇷🇺 Ruski</option>
+    <option value="pt">🇧🇷 Portugalski</option>
+    <option value="hi">🇮🇳 Hindi</option>
+    <option value="zh">🇨🇳 Kineski</option>
+    <option value="ja">🇯🇵 Japanski</option>
+    <option value="ar">🇸🇦 Arapski</option>
+    <option value="nl">🇳🇱 Holandski</option>
+    <option value="tr">🇹🇷 Turski</option>
+    <option value="it">🇮🇹 Italijanski</option>
+    <option value="ko">🇰🇷 Korejski</option>
+</select>
+
+    
+    <div id="subtitles"></div>
+</body>
+ </html>  
