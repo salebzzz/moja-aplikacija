@@ -10,15 +10,7 @@ socketio = SocketIO(app, cors_allowed_origins="*", async_mode="threading")
 
 @app.route("/")
 def home():
-    return render_template("index.html")  # Proveri da li treba "index.html"
-
-@app.route("/chat")
-def chat():
-    return render_template("chat.html")
-
-@app.route("/video")
-def video():
-    return render_template("video.html")
+    return render_template("index.html")
 
 @socketio.on("message")
 def handle_message(msg):
@@ -28,20 +20,17 @@ def handle_message(msg):
 @socketio.on("offer")
 def handle_offer(data):
     print("📡 Primljena ponuda:", data)
-    socketio.emit("offer", data, broadcast=True)
+    socketio.emit("offer", data)  # Uklonjen broadcast=True
 
 @socketio.on("answer")
 def handle_answer(data):
     print("✅ Primljen odgovor:", data)
-    socketio.emit("answer", data, broadcast=True)
+    socketio.emit("answer", data)  # Uklonjen broadcast=True
 
 @socketio.on("ice-candidate")
 def handle_ice_candidate(data):
     print("❄️ Primljen ICE kandidat:", data)
-    socketio.emit("ice-candidate", data, broadcast=True)
+    socketio.emit("ice-candidate", data)  # Uklonjen broadcast=True
+
 if __name__ == "__main__":
-         app.run(debug=True, host="0.0.0.0", port=5000)
-
-
-
-
+    socketio.run(app, debug=True, host="0.0.0.0", port=5000)
