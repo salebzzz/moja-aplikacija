@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from flask_socketio import SocketIO, send
 from flask_cors import CORS
+from waitress import serve
 
 app = Flask(__name__)
 CORS(app)  # Omogućava CORS za sve rute
@@ -32,8 +33,8 @@ def handle_ice_candidate(data):
     print("❄️ Primljen ICE kandidat:", data)
     socketio.emit("ice-candidate", data)  # Uklonjen broadcast=True
 
-# Zamenjeno sa socketio.run za gunicorn
 if __name__ == "__main__":
-    # Ovo je samo za lokalno testiranje. Gunicorn će se koristiti prilikom deploy-a.
-    socketio.run(app, debug=True, host="0.0.0.0", port=5000)
+    # Pokrećemo aplikaciju koristeći waitress
+    serve(app, host='0.0.0.0', port=5000)
+
 
