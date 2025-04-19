@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <!-- Povezivanje CSS fajla kroz Flask -->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+
 </head>
 <body>
 
@@ -19,7 +21,6 @@
 
     <main class="container fade-in">
         <h1 class="refleksija">Welcome to home page</h1>
-        <img src="{{ url_for('static', filename='earth.png') }}" alt="Glowing Earth" class="earth-image">
         
         <!-- Video sekcija -->
         <h2>Real-Time Translation App</h2>
@@ -33,9 +34,9 @@
 
     <!-- Povezivanje JS fajla kroz Flask -->
     <script src="{{ url_for('static', filename='script.js') }}"></script>
-
 </body>
 </html>
+
 
 
 
