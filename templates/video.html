@@ -3,26 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Page</title>
-    
+    <title>Video Call</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
-
 </head>
 <body>
 
-    <nav>
-        <a href="/">Home</a>
-        <a href="/chat">Chat</a>
-        <a href="/video">Video</a>
-    </nav>
+<nav>
+    <a href="/">Home</a>
+    <a href="/chat">Chat</a>
+    <a href="/video">Video</a>
+</nav>
 
-    <main>
-        <h2>Video Page</h2>
-        <p>Ova stranica je mesto za buduće video pozive sa prevodom!</p>
-        <video id="videoElement" autoplay playsinline></video>
-        <div id="subtitles">Subtitles will appear here...</div>
-    </main>
+<main>
+    <h2>Video poziv</h2>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <div>
+        <input type="text" id="roomInput" placeholder="Unesite naziv sobe">
+        <button onclick="joinRoom()">Pridruži se</button>
+    </div>
+
+    <div class="video-container">
+        <video id="localVideo" autoplay muted playsinline></video>
+        <video id="remoteVideo" autoplay playsinline></video>
+    </div>
+
+    <div id="subtitles">Titlovi će se pojavljivati ovde...</div>
+</main>
+
+<!-- Socket.IO -->
+<script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
+
+<!-- JS skripta -->
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
 </body>
 </html>
