@@ -2,7 +2,11 @@ services:
   - type: web
     name: real-time-app
     env: python
+<<<<<<< HEAD
     buildCommand: ""
+=======
+    buildCommand: : pip install -r requirements.txt
+>>>>>>> ad1fa1c002d6beb4551432457e6998626e9d0e2f
     startCommand: gunicorn app:app
     envVars:
       - key: FLASK_ENV
